@@ -9,16 +9,30 @@ import SwiftUI
 
 struct LineupRow: View {
     var lineup: Lineup
+    @State private var showImage = false
     
     var body: some View {
-        HStack {
-            lineup.image
-                .resizable()
-                .frame(width: 50, height: 50)
-                .border(Color.black, width: 1)
-            Text(lineup.name)
-            Spacer()
-            
+        VStack {
+            HStack {
+                /*
+                lineup.image
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .border(Color.black, width: 1)
+                */
+                Text(lineup.name)
+                
+                Spacer()
+                
+            }
+            .onTapGesture {}.onLongPressGesture(minimumDuration: 0.05) {
+                // show a preview of the image
+                showImage.toggle()
+            }
+            if showImage {
+                lineup.image
+                    .border(Color.black, width: 1)
+            }
         }
     }
 }

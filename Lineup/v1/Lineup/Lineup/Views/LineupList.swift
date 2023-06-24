@@ -28,14 +28,10 @@ struct LineupList: View {
                         // fix on delete so deletes this lineup from the json file
                         index in lineups.remove(atOffsets: index)
                     }
-                    .onTapGesture {}.onLongPressGesture(minimumDuration: 0.1) {
-                        // show a preview of the image
-                        print("long press")
-                    }
-                    
                 }
                 .navigationTitle("Lineups")
                 
+                // fix so you can see new lineup straight away after pressing button
                 Button(action: addLineup) {
                     Text("New Lineup")
                         .foregroundColor(Color.blue)

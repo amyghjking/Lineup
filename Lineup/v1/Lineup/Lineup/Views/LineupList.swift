@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LineupList: View {
     
     @State private var searchText = ""
+    @State private var searchResults: [Lineup] = lineups
     
     var body: some View {
         NavigationView {
@@ -17,6 +19,7 @@ struct LineupList: View {
                 List {
                     /* list each lineup matching search results. If search is empty shows all lineups
                      */
+                    
                     ForEach(searchResults, id : \.self) {
                         lineup in NavigationLink {
                             LineupDetail(lineup: lineup)
@@ -31,28 +34,31 @@ struct LineupList: View {
                 }
                 .navigationTitle("Lineups")
                 
-                // fix so you can see new lineup straight away after pressing button
-                Button(action: addLineup) {
+
+                Button(action: {
+                    addLineup()
+                    updateSearchResults()
+                }) {
                     Text("New Lineup")
                         .foregroundColor(Color.blue)
                         .bold()
                 }
                 
-                Spacer()
             }
         }
         .searchable(text: $searchText)
+        .onReceive(Just(searchText)) { _ in
+                    updateSearchResults()
+                }
     }
-    
-    
-    var searchResults: [Lineup] {
+     
+    func updateSearchResults() {
         if searchText.isEmpty {
-            return lineups
+            searchResults = lineups
         } else {
-            return lineups.filter {$0.name.lowercased().contains(searchText.lowercased())}
+            searchResults = lineups.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-    
 }
 
 struct LineupList_Previews: PreviewProvider {
@@ -60,3 +66,4 @@ struct LineupList_Previews: PreviewProvider {
         LineupList()
     }
 }
+

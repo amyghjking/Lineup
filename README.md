@@ -1,4 +1,4 @@
 # Lineup
 
-ios app written in Swift
-\nCan create sports team sheet lineups.
+ios app written in Swift <br>
+Can create sports team sheet lineups.

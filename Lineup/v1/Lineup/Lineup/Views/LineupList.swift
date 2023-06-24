@@ -28,8 +28,9 @@ struct LineupList: View {
                         }
                     }
                     .onDelete {
-                        // fix on delete so deletes this lineup from the json file
                         index in lineups.remove(atOffsets: index)
+                        removeLineup(index: index)
+                        updateSearchResults()
                     }
                 }
                 .navigationTitle("Lineups")
